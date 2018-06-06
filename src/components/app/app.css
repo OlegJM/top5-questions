@@ -1,0 +1,62 @@
+@import "../../assets/styles/index.css";
+
+.app {
+    &__main {
+        position: relative;
+        min-height: 48px;
+        box-shadow: 0 0 5px #e9ecef;
+
+        &--loading {
+            &:before {
+                position: absolute;
+                top: 0;
+                bottom: -1px;
+                left: 0;
+                z-index: 1;
+                display: block;
+                width: 100%;
+                content: '';
+                background: #fff;
+                opacity: .85;
+                border: 1px solid rgba(0, 0, 0, 0.125);
+            }
+        }
+    }
+
+    &__header {
+        position: relative;
+        z-index: 2;
+        padding-bottom: 15px;
+        font-size: 16px;
+    }
+
+    &__header-text {
+        margin-right: 15px;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.8;
+        white-space: pre-line;
+
+        + div {
+            display: inline-block;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+    }
+
+    &__loader {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 1;
+        width: 100px;
+        height: 16px;
+        margin-left: -50px;
+        margin-top: -8px;
+        background: url('../../assets/icons/loader.svg') center no-repeat;
+    }
+
+    &__main-alert {
+        text-align: center;
+    }
+}

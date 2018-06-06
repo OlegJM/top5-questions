@@ -1,0 +1,39 @@
+@import "./item-info.css";
+
+.list-item {
+    position: relative;
+    display: block;
+    margin-bottom: -1px;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+
+    &--answered {
+        color: #155724;
+        background-color: #d4edda;
+    }
+
+    &__header {
+        display: flex;
+        padding: 0.75rem 0.25rem 0.75rem 1.25rem;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    &__controls {
+        display: flex;
+        align-items: center;
+    }
+
+    &--answered &__info {
+        background-color: #fff;
+    }
+
+    & &__rating {
+        margin: 0 5px;
+    }
+
+    &__rating-arrows {
+        margin-left: 2px;
+    }
+}

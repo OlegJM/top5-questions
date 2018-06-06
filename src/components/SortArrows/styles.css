@@ -1,0 +1,34 @@
+.sort-arrows {
+    display: flex;
+    flex-direction: column;
+
+    &__arrow {
+        display: block;
+        width: 20px;
+        height: 14px;
+        padding: 2px;
+        box-sizing: content-box;
+        border: 0;
+        background: url('./icons/arrow.svg') no-repeat center;
+        background-size: auto 14px;
+        opacity: .5;
+        transition: opacity .2s;
+        cursor: pointer;
+
+        &:focus {
+            outline: none;
+        }
+
+        & + & {
+            margin-top: 5px;
+        }
+
+        &:hover {
+            opacity: 1;
+        }
+
+        &--up {
+            transform: rotate(-180deg);
+        }
+    }
+}

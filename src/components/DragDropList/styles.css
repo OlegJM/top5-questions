@@ -1,0 +1,17 @@
+.dnd-list {
+    width: 100%;
+    padding: 2px 2px 3px;
+    background: #6c757d;
+
+    &--dragging {
+        background: #3e7d77;
+    }
+
+    &__item {
+        transition: box-shadow .15s;
+
+        &--drag {
+            box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.2);
+        }
+    }
+}
