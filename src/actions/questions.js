@@ -29,10 +29,11 @@ export const getQuestions = date => (dispatch) => {
         });
 };
 
-export const reorderQuestions = (items) => ({
+export const reorderQuestions = (sourceIndex, destinationIndex) => ({
     type: REORDER_QUESTIONS,
     payload: {
-        items
+        sourceIndex,
+        destinationIndex
     }
 });
 

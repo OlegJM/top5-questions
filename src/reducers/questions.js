@@ -1,6 +1,8 @@
 import * as actionTypes from '../constants/actionTypes';
-import { sortByScoreField } from '../utils';
+import { reorderArray, sortByScoreField } from '../utils';
 import { INCREMENT_RATING } from '../constants';
+
+import { reorderQuestions } from '../actions';
 
 let initialState = {
     items: [],
@@ -30,10 +32,9 @@ export default function questionsReducer(state = initialState, action) {
         }
 
         case actionTypes.REORDER_QUESTIONS: {
-            return {
-                isFetching: false,
-                items: payload.items
-            };
+            const items = reorderArray(state.items, payload.sourceIndex, payload.destinationIndex);
+
+            return { ...state, items };
         }
 
         case actionTypes.CHANGE_RATING: {

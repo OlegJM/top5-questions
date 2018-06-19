@@ -8,8 +8,6 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import DragDropItem from '../DragDropItem';
 
 import { reorderQuestions, changeRating } from '../../actions';
-import { MOVE_DOWN, MOVE_UP } from '../../constants';
-import { reorderArray } from '../../utils';
 
 import './styles.css';
 
@@ -23,44 +21,30 @@ class DragDropList extends Component {
   constructor() {
     super();
 
+    this.state = {
+      activeItemIndex: null
+    };
+
     this.onDragEnd = this.onDragEnd.bind(this);
     this.handleChangeItemPosition = this.handleChangeItemPosition.bind(this);
+    this.handleChangeOpenItem = this.handleChangeOpenItem.bind(this);
     this.renderItem = this.renderItem.bind(this);
   }
 
   onDragEnd(result) {
-    if (!result.destination || result.destination.index === result.source.index) {
-      return;
-    }
+    if (!result.destination || result.destination.index === result.source.index) return;
 
-    const items = reorderArray(
-      this.props.questions,
-      result.source.index,
-      result.destination.index
-    );
-
-    this.props.reorderQuestions(items);
+    this.props.reorderQuestions(result.source.index, result.destination.index);
   }
 
   handleChangeItemPosition(actionType, sourceIndex) {
-    let destinationIndex = sourceIndex;
+    const destinationIndex = sourceIndex + actionType;
 
-    switch (actionType) {
-      case MOVE_UP:
-        destinationIndex = sourceIndex - 1;
-        break;
-      case MOVE_DOWN:
-        destinationIndex = sourceIndex + 1;
-        break;
-    }
+    this.props.reorderQuestions(sourceIndex, destinationIndex);
+  }
 
-    const items = reorderArray(
-      this.props.questions,
-      sourceIndex,
-      destinationIndex
-    );
-
-    this.props.reorderQuestions(items);
+  handleChangeOpenItem(index) {
+    this.setState({ activeItemIndex: index });
   }
 
   renderItem(item, index) {
@@ -72,10 +56,12 @@ class DragDropList extends Component {
         key={ item.question_id }
         item={ item }
         index={ index }
+        activeItemIndex={ this.state.activeItemIndex }
         isFirstItem={ isFirstItem }
         isLastItem={ isLastItem }
         onChangeRating={ this.props.changeRating }
         onChangeItemPosition={ this.handleChangeItemPosition }
+        onChangeActiveItem={ this.handleChangeOpenItem }
       />
     );
   }

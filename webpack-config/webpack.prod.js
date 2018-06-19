@@ -5,6 +5,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const Visualizer = require('webpack-visualizer-plugin');
+const helpers = require('./helpers');
 
 const GENERATE_STATS = process.env.GENERATE_STATS === '1';
 const ENV = 'production';
@@ -50,7 +51,7 @@ const config = webpackMerge.smart(commonConfig, {
                 ]
             },
             {
-                test: /\.(jpe?g|png|gif|svg)$/,
+                test: /\.(jpe?g|png|gif)$/,
                 use: [
                     {
                         loader: 'file-loader',
@@ -74,12 +75,35 @@ const config = webpackMerge.smart(commonConfig, {
                             }
                         }
                     }
+                ],
+                exclude: /node_modules/
+            },
+            {
+                test: /\.(svg)$/,
+                use: [
+                    {
+                        loader: 'image-webpack-loader',
+                        options: {
+                            svgo: {
+                                plugins: [
+                                    { removeViewBox: false },
+                                    { removeEmptyAttrs: false }
+                                ]
+                            }
+                        }
+                    }
+                ],
+                include: [
+                    helpers.root('src')
                 ]
             }
         ]
     },
     plugins: [
-        new MiniCssExtractPlugin({ filename: '[name].css' })
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+            publicPath: ASSETS_PATH
+        })
     ]
 });
 

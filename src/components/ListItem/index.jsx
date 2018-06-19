@@ -27,7 +27,8 @@ export default class ListItem extends Component {
     isFirstItem: PropTypes.bool.isRequired,
     isLastItem: PropTypes.bool.isRequired,
     onChangeRating: PropTypes.func.isRequired,
-    onChangeItemPosition: PropTypes.func.isRequired
+    onChangeItemPosition: PropTypes.func.isRequired,
+    onClickItem: PropTypes.func.isRequired
   };
 
   constructor() {

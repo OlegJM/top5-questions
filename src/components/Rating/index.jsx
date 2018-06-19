@@ -8,23 +8,23 @@ import { INCREMENT_RATING, DECREMENT_RATING } from '../../constants';
 import './styles.css';
 
 const Rating = (props) => {
-  const handleClickRating = (e) => { e.stopPropagation(); };
-  const onIncrement = () => props.onChange(INCREMENT_RATING);
-  const onDecrement = () => props.onChange(DECREMENT_RATING);
+  const handleClickWrapper = e => e.stopPropagation();
+  const handleIncrement = () => props.onChange(INCREMENT_RATING);
+  const handleDecrement = () => props.onChange(DECREMENT_RATING);
 
   return (
-    <div role="presentation" className={ cn('rating', props.className) } onClick={ handleClickRating }>
+    <div role="presentation" className={ cn('rating', props.className) } onClick={ handleClickWrapper }>
       <Badge>{ props.rating }</Badge>
       <div className="rating__buttons">
         <button
           className="rating__button rating__button--up"
           title="Хороший вопрос!"
-          onClick={ onIncrement }
+          onClick={ handleIncrement }
         />
         <button
           className="rating__button rating__button--down"
           title="Плохой вопрос :("
-          onClick={ onDecrement }
+          onClick={ handleDecrement }
         />
       </div>
     </div>
