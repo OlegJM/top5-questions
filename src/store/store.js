@@ -1,7 +1,7 @@
 import {createStore, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 
-import reducers from '../reducers/index';
+import reducers from '../reducers';
 
 // Redux dev tools. See more:
 // https://github.com/zalmoxisus/redux-devtools-extension

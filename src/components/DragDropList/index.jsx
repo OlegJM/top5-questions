@@ -27,7 +27,7 @@ class DragDropList extends Component {
 
     this.onDragEnd = this.onDragEnd.bind(this);
     this.handleChangeItemPosition = this.handleChangeItemPosition.bind(this);
-    this.handleChangeOpenItem = this.handleChangeOpenItem.bind(this);
+    this.handleChangeActiveItem = this.handleChangeActiveItem.bind(this);
     this.renderItem = this.renderItem.bind(this);
   }
 
@@ -43,7 +43,7 @@ class DragDropList extends Component {
     this.props.reorderQuestions(sourceIndex, destinationIndex);
   }
 
-  handleChangeOpenItem(index) {
+  handleChangeActiveItem(index) {
     this.setState({ activeItemIndex: index });
   }
 
@@ -61,7 +61,7 @@ class DragDropList extends Component {
         isLastItem={ isLastItem }
         onChangeRating={ this.props.changeRating }
         onChangeItemPosition={ this.handleChangeItemPosition }
-        onChangeActiveItem={ this.handleChangeOpenItem }
+        onChangeActiveItem={ this.handleChangeActiveItem }
       />
     );
   }

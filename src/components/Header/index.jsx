@@ -58,7 +58,9 @@ export default class Header extends Component {
 
         {
           isNewDate &&
-            <Button color="success" size="sm" onClick={ this.handleClickButton }>Поиск</Button>
+            <Button color="success" size="sm" onClick={ this.handleClickButton }>
+              Поиск
+            </Button>
         }
       </header>
     );
