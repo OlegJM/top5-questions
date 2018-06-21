@@ -6,6 +6,8 @@ import moment from 'moment';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
+import { dateFormat } from "../../constants";
+
 const title = '5 самых популярных вопросов на StackOverflow, содержащих\n "react-redux" в наименовании, начиная с';
 
 export default class Header extends Component {
@@ -53,7 +55,7 @@ export default class Header extends Component {
           maxDate={ moment() }
           onChange={ this.handleChangeDate }
           locale="ru-ru"
-          dateFormat="DD.MM.YYYY"
+          dateFormat={ dateFormat }
         />
 
         {

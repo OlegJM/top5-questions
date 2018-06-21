@@ -25,16 +25,34 @@ class DragDropList extends Component {
       activeItemIndex: null
     };
 
+    this.containerRef = null;
+
     this.onDragEnd = this.onDragEnd.bind(this);
+    this.handleDocumentClick = this.handleDocumentClick.bind(this);
     this.handleChangeItemPosition = this.handleChangeItemPosition.bind(this);
     this.handleChangeActiveItem = this.handleChangeActiveItem.bind(this);
     this.renderItem = this.renderItem.bind(this);
   }
 
+  componentDidMount() {
+    document.body.addEventListener('click', this.handleDocumentClick);
+  }
+
+  componentWillUnmount() {
+    document.body.removeEventListener('click', this.handleDocumentClick);
+  }
+
   onDragEnd(result) {
     if (!result.destination || result.destination.index === result.source.index) return;
 
+    this.setState({ activeItemIndex: -1 });
     this.props.reorderQuestions(result.source.index, result.destination.index);
+  }
+
+  handleDocumentClick(e) {
+    if (this.containerRef && !this.containerRef.contains(e.target)) {
+      this.setState({ activeItemIndex: -1 });
+    }
   }
 
   handleChangeItemPosition(actionType, sourceIndex) {
@@ -44,7 +62,8 @@ class DragDropList extends Component {
   }
 
   handleChangeActiveItem(index) {
-    this.setState({ activeItemIndex: index });
+    const activeItemIndex = this.state.activeItemIndex !== index ? index : -1;
+    this.setState({ activeItemIndex });
   }
 
   renderItem(item, index) {
@@ -56,7 +75,7 @@ class DragDropList extends Component {
         key={ item.question_id }
         item={ item }
         index={ index }
-        activeItemIndex={ this.state.activeItemIndex }
+        itemActive={ this.state.activeItemIndex === index }
         isFirstItem={ isFirstItem }
         isLastItem={ isLastItem }
         onChangeRating={ this.props.changeRating }
@@ -72,7 +91,10 @@ class DragDropList extends Component {
         <Droppable droppableId="droppable">
           {(provided, snapshot) => (
             <section
-              ref={ provided.innerRef }
+              ref={ (ref) => {
+                this.containerRef = ref;
+                return provided.innerRef(ref);
+              } }
               className={ cn('dnd-list', { 'dnd-list--dragging': snapshot.isDraggingOver }) }
             >
               { this.props.questions.map(this.renderItem) }

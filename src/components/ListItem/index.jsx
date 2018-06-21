@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 import cn from 'classnames';
@@ -24,6 +24,7 @@ export default class ListItem extends Component {
       owner: PropTypes.object
     }),
     index: PropTypes.number.isRequired,
+    itemActive: PropTypes.bool.isRequired,
     isFirstItem: PropTypes.bool.isRequired,
     isLastItem: PropTypes.bool.isRequired,
     onChangeRating: PropTypes.func.isRequired,
@@ -34,40 +35,14 @@ export default class ListItem extends Component {
   constructor() {
     super();
 
-    this.item = createRef();
-    this.handleDocumentClick = this.handleDocumentClick.bind(this);
     this.handleClickItem = this.handleClickItem.bind(this);
     this.handleClickItemInfo = this.handleClickItemInfo.bind(this);
     this.handleChangeRating = this.handleChangeRating.bind(this);
     this.handleChangePosition = this.handleChangePosition.bind(this);
   }
 
-  state = {
-    itemOpen: false
-  };
-
-  componentDidMount() {
-    document.body.addEventListener('click', this.handleDocumentClick);
-  }
-
-  componentWillUnmount() {
-    document.body.removeEventListener('click', this.handleDocumentClick);
-  }
-
-  handleDocumentClick(e) {
-    const currentItem = this.item.current;
-
-    if (currentItem && !currentItem.contains(e.target)) {
-      this.setState({
-        itemOpen: false
-      });
-    }
-  }
-
   handleClickItem() {
-    this.setState({
-      itemOpen: !this.state.itemOpen
-    });
+    this.props.onClickItem(this.props.index);
   }
 
   handleClickItemInfo(e) {
@@ -96,7 +71,7 @@ export default class ListItem extends Component {
 
     return (
       <CSSTransition
-        in={ this.state.itemOpen }
+        in={ this.props.itemActive }
         classNames="item-info-"
         timeout={ { enter: 300, exit: 200 } }
       >
@@ -131,10 +106,7 @@ export default class ListItem extends Component {
     const { item, isFirstItem, isLastItem } = this.props;
 
     return (
-      <article
-        className={ cn('list-item', this.props.className, { 'list-item--answered': item.is_answered }) }
-        ref={ this.item }
-      >
+      <article className={ cn('list-item', this.props.className, { 'list-item--answered': item.is_answered }) }>
         <div
           className={ cn('list-item__header', { 'list-item__header--answered': item.is_answered }) }
           role="presentation"

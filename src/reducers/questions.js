@@ -1,8 +1,6 @@
 import * as actionTypes from '../constants/actionTypes';
-import { reorderArray, sortByScoreField } from '../utils';
+import { reorderArray } from '../utils';
 import { INCREMENT_RATING } from '../constants';
-
-import { reorderQuestions } from '../actions';
 
 let initialState = {
     items: [],
@@ -18,13 +16,7 @@ export default function questionsReducer(state = initialState, action) {
         }
 
         case actionTypes.GET_QUESTIONS_SUCCESS: {
-            const filteredQuestions = payload.items
-                .filter(item => /react-redux/i.test(item.title));
-            const items = filteredQuestions
-                .sort(sortByScoreField)
-                .slice(0, 5);
-
-            return { isFetching: false, items };
+            return { isFetching: false, items: payload.items };
         }
 
         case actionTypes.GET_QUESTIONS_FAILURE: {

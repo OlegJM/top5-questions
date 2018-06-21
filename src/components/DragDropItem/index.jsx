@@ -6,7 +6,17 @@ import { Draggable } from 'react-beautiful-dnd';
 import ListItem from '../ListItem';
 
 const DragDropItem = (props) => {
-  const { item, index, isFirstItem, isLastItem, onChangeRating, onChangeItemPosition, onChangeItemPosition } = props;
+  const {
+    item,
+    index,
+    itemActive,
+    isFirstItem,
+    isLastItem,
+    onChangeRating,
+    onChangeItemPosition,
+    onChangeActiveItem
+  } = props;
+
   return (
     <Draggable key={ item.question_id } draggableId={ item.question_id } index={ index }>
       {(provided, snapshot) => (
@@ -19,11 +29,12 @@ const DragDropItem = (props) => {
           <ListItem
             index={ index }
             item={ item }
+            itemActive={ itemActive }
             isFirstItem={ isFirstItem }
             isLastItem={ isLastItem }
             onChangeRating={ onChangeRating }
             onChangeItemPosition={ onChangeItemPosition }
-            onClickItem={ onChangeItemPosition }
+            onClickItem={ onChangeActiveItem }
           />
         </div>
       )}
@@ -34,11 +45,12 @@ const DragDropItem = (props) => {
 DragDropItem.propTypes = {
   item: PropTypes.any,
   index: PropTypes.number.isRequired,
+  itemActive: PropTypes.bool.isRequired,
   isFirstItem: PropTypes.bool.isRequired,
   isLastItem: PropTypes.bool.isRequired,
   onChangeRating: PropTypes.func.isRequired,
   onChangeItemPosition: PropTypes.func.isRequired,
-  onChangeItemState: PropTypes.func.isRequired
+  onChangeActiveItem: PropTypes.func.isRequired
 };
 
 export default DragDropItem;

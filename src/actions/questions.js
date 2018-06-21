@@ -14,7 +14,7 @@ export const getQuestions = date => (dispatch) => {
     dispatch({ type: GET_QUESTIONS_REQUEST });
     const dateInMs = moment(date).unix();
     const apiUrl = 'https://api.stackexchange.com/2.2/search';
-    const searchParams = 'pagesize=100&order=asc&sort=creation&intitle=react-redux&site=stackoverflow';
+    const searchParams = 'pagesize=5&order=desc&sort=votes&intitle=react-redux&site=stackoverflow';
     const advSearchParam = `fromdate=${dateInMs}`;
     const searchUrl = `${apiUrl}?${searchParams}&${advSearchParam}`;
 
